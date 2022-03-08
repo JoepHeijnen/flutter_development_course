@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:taskly/pages/home_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await Hive.initFlutter('hives_boxes');
+  runApp(const Taskly());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Taskly extends StatelessWidget {
+  const Taskly({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      title: 'Taskly',
+      theme: ThemeData(primarySwatch: Colors.red),
+      home: const HomePage(),
     );
   }
 }
