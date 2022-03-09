@@ -1,7 +1,6 @@
 import 'dart:convert';
-
+import 'package:coin_cap/pages/details_page.dart';
 import 'package:coin_cap/services/http_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -14,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double? _deviceWidth, _deviceHeight;
+  String? _selectedCoin = 'bitcoin';
 
   HTTPService? _httpService;
 
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(flex: 1, child: _selectedCoinDropdown()),
-              Expanded(flex: 9, child: _DataWidgets()),
+              Expanded(flex: 7, child: _DataWidgets()),
             ],
           ),
         ),
@@ -45,14 +45,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _selectedCoinDropdown() {
-    List<String> _coins = ['Bitcoin'];
+    List<String> _coins = [
+      "bitcoin",
+      "ethereum",
+      "tether",
+      "cardano",
+      "ripple"
+    ];
     List<DropdownMenuItem<String>> _items = _coins
         .map((e) => DropdownMenuItem(
               child: Text(
                 e,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 40,
+                  fontSize: 28,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -63,9 +69,13 @@ class _HomePageState extends State<HomePage> {
     return Container(
       margin: const EdgeInsets.all(16),
       child: DropdownButton(
-        value: _coins.first,
+        value: _selectedCoin,
         items: _items,
-        onChanged: (_value) {},
+        onChanged: (dynamic _value) {
+          setState(() {
+            _selectedCoin = _value;
+          });
+        },
         dropdownColor: const Color.fromRGBO(83, 88, 206, 1.0),
         iconSize: 30,
         icon: const Icon(Icons.arrow_drop_down_sharp, color: Colors.white),
@@ -76,7 +86,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _DataWidgets() {
     return FutureBuilder(
-      future: _httpService!.get('/coins/bitcoin'),
+      future: _httpService!.get('/coins/$_selectedCoin'),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
         if (_snapshot.hasData) {
           Map _data = jsonDecode(_snapshot.data.toString());
@@ -84,13 +94,24 @@ class _HomePageState extends State<HomePage> {
           num _price = _data['market_data']['current_price']['eur'];
           num _change = _data['market_data']['price_change_percentage_24h'];
           String _description = _data['description']['en'];
+          Map _exchangeRates = _data['market_data']['current_price'];
 
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _coinImageWidget(_image),
+              GestureDetector(
+                onDoubleTap: () {
+                  Navigator.push(
+                    _context,
+                    MaterialPageRoute(builder: (BuildContext _context) {
+                      return DetailsPage(rates: _exchangeRates);
+                    }),
+                  );
+                },
+                child: _coinImageWidget(_image),
+              ),
               _currentPriceWidget(_price),
               _percentageChangeWidget(_change),
               _descriptionCardWidget(_description)
@@ -146,6 +167,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 16),
       padding: const EdgeInsets.all(16),
+      height: _deviceHeight! * 0.5,
       color: const Color.fromRGBO(83, 88, 206, 1.0),
       child: Text(
         _description,

@@ -14,10 +14,11 @@ class HTTPService {
     _baseUrl = _appConfig!.coinApiBaseUrl;
   }
 
-  Future<Response?> get(String _path) async {
+  Future<Response?> get(String _path,
+      [Map<String, dynamic>? _queryParams]) async {
     try {
       String _url = '$_baseUrl$_path';
-      Response? _reponse = await dio.get(_url);
+      Response? _reponse = await dio.get(_url, queryParameters: _queryParams);
       return _reponse;
     } catch (e) {
       print('HTTPService: Unable to perform get request.');
