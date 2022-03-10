@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:frivia/pages/game_page.dart';
-import 'package:frivia/providers/game_page_provider.dart';
-import 'package:frivia/widgets/slider.dart';
-import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  GamePageProvider? _pageProvider;
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  HomePage({Key? key}) : super(key: key);
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  double _difficulty = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_context) => GamePageProvider(context: context),
-      child: _buildUI(),
-    );
+    return _buildUI();
   }
 
   Widget _buildUI() {
     return Builder(builder: (_context) {
-      _pageProvider = _context.watch<GamePageProvider>();
-
       return Scaffold(
         body: SafeArea(
           child: Container(
@@ -37,7 +34,7 @@ class HomePage extends StatelessWidget {
                       _difficultyWidget(),
                     ],
                   ),
-                  SliderWidget(pageProvider: _pageProvider!),
+                  _sliderWidget(),
                   _startButton()
                 ],
               ),
@@ -61,9 +58,21 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  String getDifficultyText() {
+    if (_difficulty == 0.0) {
+      return 'Easy';
+    }
+
+    if (_difficulty == 1.0) {
+      return 'Medium';
+    }
+
+    return 'Hard';
+  }
+
   Widget _difficultyWidget() {
     return Text(
-      _pageProvider!.getDifficulty(),
+      getDifficultyText(),
       style: const TextStyle(
         color: Colors.white,
         fontSize: 14,
@@ -78,7 +87,7 @@ class HomePage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (BuildContext _context) {
-              return GamePage();
+              return GamePage(difficulty: getDifficultyText());
             }),
           );
         },
@@ -91,5 +100,18 @@ class HomePage extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Widget _sliderWidget() {
+    return Slider(
+      value: _difficulty,
+      max: 2,
+      divisions: 2,
+      onChanged: (double value) {
+        setState(() {
+          _difficulty = value;
+        });
+      },
+    );
   }
 }

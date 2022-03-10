@@ -3,14 +3,16 @@ import 'package:frivia/providers/game_page_provider.dart';
 import 'package:provider/provider.dart';
 
 class GamePage extends StatelessWidget {
+  String difficulty;
   GamePageProvider? _pageProvider;
 
-  GamePage({Key? key}) : super(key: key);
+  GamePage({Key? key, required this.difficulty}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_context) => GamePageProvider(context: context),
+      create: (_context) =>
+          GamePageProvider(context: context, difficulty: difficulty),
       child: _buildUI(),
     );
   }

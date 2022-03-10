@@ -11,9 +11,9 @@ class GamePageProvider extends ChangeNotifier {
   List? questions;
   int _currentQuestionCount = 0;
   int _amountCorrect = 0;
-  String _difficulty = 'easy';
+  String difficulty;
 
-  GamePageProvider({required this.context}) {
+  GamePageProvider({required this.context, required this.difficulty}) {
     _dio.options.baseUrl = 'https://opentdb.com/api.php';
     _getQuestions();
   }
@@ -23,7 +23,7 @@ class GamePageProvider extends ChangeNotifier {
       '',
       queryParameters: {
         'amount': _amount,
-        'difficulty': _difficulty,
+        'difficulty': difficulty.toLowerCase(),
         'type': 'boolean',
       },
     );
@@ -90,15 +90,5 @@ class GamePageProvider extends ChangeNotifier {
     await Future.delayed(const Duration(seconds: 2));
     Navigator.pop(context);
     Navigator.pop(context);
-  }
-
-  Future<void> setDifficulty(String _newDifficulty) async {
-    _difficulty = _newDifficulty;
-    await _getQuestions();
-    notifyListeners();
-  }
-
-  String getDifficulty() {
-    return _difficulty;
   }
 }
