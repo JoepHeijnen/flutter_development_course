@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/home_page_provider.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends ConsumerWidget {
   final String title;
 
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return _buildUI();
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _buildUI(ref);
   }
 
-  Widget _buildUI() {
+  Widget _buildUI(WidgetRef ref) {
+    final count = ref.watch(counterProvider.state).state;
+
     return Builder(builder: (_context) {
       return Scaffold(
         appBar: AppBar(
@@ -24,9 +26,9 @@ class MyHomePage extends StatelessWidget {
             children: [
               const Text('Counter:'),
               Text(
-                '0',
+                count.toString(),
                 style: Theme.of(_context).textTheme.headline4,
-              ),
+              )
             ],
           ),
         ),
@@ -36,14 +38,14 @@ class MyHomePage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 16),
               child: FloatingActionButton(
-                onPressed: () {},
-                tooltip: 'Increment',
+                onPressed: () => ref.read(counterProvider.state).state--,
+                tooltip: 'Decrement',
                 child: const Icon(Icons.horizontal_rule),
               ),
             ),
             FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'Decrement',
+              onPressed: () => ref.read(counterProvider.state).state++,
+              tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),
           ],
