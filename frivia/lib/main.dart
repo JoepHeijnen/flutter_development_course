@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frivia/pages/game_page.dart';
+import 'package:frivia/pages/home_page.dart';
 
 void main() {
   runApp(const Frivia());
@@ -17,6 +18,6 @@ class Frivia extends StatelessWidget {
           scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
           fontFamily: 'Ubuntu',
         ),
-        home: GamePage());
+        home: HomePage());
   }
 }

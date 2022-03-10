@@ -10,6 +10,8 @@ class GamePageProvider extends ChangeNotifier {
   BuildContext context;
   List? questions;
   int _currentQuestionCount = 0;
+  int _amountCorrect = 0;
+  String _difficulty = 'easy';
 
   GamePageProvider({required this.context}) {
     _dio.options.baseUrl = 'https://opentdb.com/api.php';
@@ -21,7 +23,7 @@ class GamePageProvider extends ChangeNotifier {
       '',
       queryParameters: {
         'amount': _amount,
-        'difficulty': 'easy',
+        'difficulty': _difficulty,
         'type': 'boolean',
       },
     );
@@ -39,6 +41,10 @@ class GamePageProvider extends ChangeNotifier {
     bool _isCorrect =
         questions![_currentQuestionCount]['correct_answer'] == _answer;
     _currentQuestionCount++;
+
+    if (_isCorrect) {
+      _amountCorrect++;
+    }
 
     showDialog(
       context: context,
@@ -67,15 +73,15 @@ class GamePageProvider extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (BuildContext _context) {
-        return const AlertDialog(
+        return AlertDialog(
           backgroundColor: Colors.blue,
-          title: Text(
+          title: const Text(
             'Game is finished!',
             style: TextStyle(fontSize: 25, color: Colors.white),
           ),
           content: Text(
-            'Score: 0/0',
-            style: TextStyle(color: Colors.white),
+            'Score: $_amountCorrect/$_amount',
+            style: const TextStyle(color: Colors.white),
           ),
         );
       },
@@ -84,5 +90,15 @@ class GamePageProvider extends ChangeNotifier {
     await Future.delayed(const Duration(seconds: 2));
     Navigator.pop(context);
     Navigator.pop(context);
+  }
+
+  Future<void> setDifficulty(String _newDifficulty) async {
+    _difficulty = _newDifficulty;
+    await _getQuestions();
+    notifyListeners();
+  }
+
+  String getDifficulty() {
+    return _difficulty;
   }
 }
