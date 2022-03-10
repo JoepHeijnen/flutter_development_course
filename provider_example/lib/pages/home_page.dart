@@ -46,7 +46,7 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   _pageProvider!.decrement();
                 },
-                tooltip: 'Increment',
+                tooltip: 'Decrement',
                 child: const Icon(Icons.horizontal_rule),
               ),
             ),
@@ -54,7 +54,7 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 _pageProvider!.increment();
               },
-              tooltip: 'Decrement',
+              tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),
           ],
