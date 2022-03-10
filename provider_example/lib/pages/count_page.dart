@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_example/models/count.dart';
+import 'package:provider_example/providers/count_page_provider.dart';
 import '../providers/home_page_provider.dart';
 
-class MyHomePage extends StatelessWidget {
+class CountPage extends StatelessWidget {
   final String title;
 
-  HomePageProvider? _pageProvider;
+  CountPageProvider? _pageProvider;
 
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  CountPage({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Count _count = Count(amount: 0, type: 'NONE');
+
     return ChangeNotifierProvider(
-      create: (_context) => HomePageProvider(context: context),
+      create: (_context) => CountPageProvider(context: context, count: _count),
       child: _buildUI(),
     );
   }
 
   Widget _buildUI() {
     return Builder(builder: (_context) {
-      _pageProvider = _context.watch<HomePageProvider>();
+      _pageProvider = _context.watch<CountPageProvider>();
 
       return Scaffold(
         appBar: AppBar(
@@ -29,13 +33,9 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Counter:'),
+              Text('Counter ${_pageProvider!.getCountType()}:'),
               Text(
-                _pageProvider!.getCounter().toString(),
-                style: Theme.of(_context).textTheme.headline4,
-              ),
-              Text(
-                _pageProvider!.getCounter().toString(),
+                _pageProvider!.getCountAmount().toString(),
                 style: Theme.of(_context).textTheme.headline4,
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider_example/pages/count_page.dart';
 import 'package:provider_example/pages/home_page.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Provider Demo'),
+      home: CountPage(title: 'Provider Demo'),
     );
   }
 }
