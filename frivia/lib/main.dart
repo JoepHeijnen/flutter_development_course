@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frivia/pages/game_page.dart';
 
 void main() {
   runApp(const Frivia());
@@ -10,15 +11,12 @@ class Frivia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Frivia',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Frivia'),
+        title: 'Frivia',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.0),
+          fontFamily: 'Ubuntu',
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
-    );
+        home: GamePage());
   }
 }
