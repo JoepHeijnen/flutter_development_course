@@ -13,8 +13,7 @@ class CountPage extends ConsumerWidget {
   }
 
   Widget _buildUI(WidgetRef ref) {
-    final amount = ref.watch(counterProvider).count.amount;
-    final type = ref.watch(counterProvider).count.type;
+    final notifier = ref.watch(counterProvider);
 
     return Builder(builder: (_context) {
       return Scaffold(
@@ -25,9 +24,9 @@ class CountPage extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Counter $type:'),
+              Text('Counter ${notifier.type}:'),
               Text(
-                amount.toString(),
+                notifier.amount.toString(),
                 style: Theme.of(_context).textTheme.headline4,
               )
             ],
@@ -40,7 +39,7 @@ class CountPage extends ConsumerWidget {
               margin: const EdgeInsets.only(right: 16),
               child: FloatingActionButton(
                 onPressed: () {
-                  ref.read(counterProvider).decrement();
+                  ref.read(counterProvider.notifier).decrement();
                 },
                 tooltip: 'Decrement',
                 child: const Icon(Icons.remove),
@@ -48,7 +47,7 @@ class CountPage extends ConsumerWidget {
             ),
             FloatingActionButton(
               onPressed: () {
-                ref.read(counterProvider).increment();
+                ref.read(counterProvider.notifier).increment();
               },
               tooltip: 'Increment',
               child: const Icon(Icons.add),

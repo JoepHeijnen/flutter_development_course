@@ -1,24 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/count.dart';
-import 'package:flutter/material.dart';
 
-final counterProvider = ChangeNotifierProvider<Counter>(
-    (ref) => Counter(count: Count(amount: 0, type: 'NONE')));
+final counterProvider = StateNotifierProvider<CounterStateNotifier, Count>(
+    (ref) => CounterStateNotifier(Count(amount: 0, type: 'unknown')));
 
-class Counter extends ChangeNotifier {
-  Count count;
-
-  Counter({required this.count});
+class CounterStateNotifier extends StateNotifier<Count> {
+  CounterStateNotifier(Count count) : super(count);
 
   void increment() {
-    count.amount++;
-    count.type = 'increment';
-    notifyListeners();
+    state = Count(amount: state.amount + 1, type: 'increment');
   }
 
   void decrement() {
-    count.amount--;
-    count.type = 'decrement';
-    notifyListeners();
+    state = Count(amount: state.amount - 1, type: 'decrement');
   }
 }
