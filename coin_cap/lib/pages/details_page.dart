@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class DetailsPage extends StatelessWidget {
   final Map rates;
 
-  DetailsPage({Key? key, required this.rates}) : super(key: key);
+  const DetailsPage({Key? key, required this.rates}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(flex: 1, child: _selectedCoinDropdown()),
-              Expanded(flex: 7, child: _DataWidgets()),
+              Expanded(flex: 7, child: _dataWidgets()),
             ],
           ),
         ),
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _DataWidgets() {
+  Widget _dataWidgets() {
     return FutureBuilder(
       future: _httpService!.get('/coins/$_selectedCoin'),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
