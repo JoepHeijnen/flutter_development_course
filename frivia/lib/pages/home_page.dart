@@ -81,25 +81,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _startButton() {
-    return Builder(builder: (context) {
-      return MaterialButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (BuildContext _context) {
-              return GamePage(difficulty: getDifficultyText());
-            }),
-          );
-        },
-        color: Colors.blue,
-        minWidth: double.infinity,
-        height: 60,
-        child: const Text(
-          'Start',
-          style: TextStyle(color: Colors.white, fontSize: 25),
-        ),
-      );
-    });
+    return MaterialButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (BuildContext _context) {
+            return GamePage(difficulty: getDifficultyText());
+          }),
+        );
+      },
+      color: Colors.blue,
+      minWidth: double.infinity,
+      height: 60,
+      child: const Text(
+        'Start',
+        style: TextStyle(color: Colors.white, fontSize: 25),
+      ),
+    );
   }
 
   Widget _sliderWidget() {
