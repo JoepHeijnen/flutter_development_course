@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../providers/home_page_provider.dart';
 
 class MyHomePage extends StatelessWidget {
   final String title;
@@ -7,7 +10,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildUI();
+    return BlocProvider(
+      create: (_) => CounterCubit(),
+      child: _buildUI(),
+    );
   }
 
   Widget _buildUI() {
@@ -21,10 +27,12 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('Counter:'),
-              Text(
-                '0',
-                style: Theme.of(_context).textTheme.headline4,
-              ),
+              BlocBuilder<CounterCubit, int>(builder: (context, count) {
+                return Text(
+                  count.toString(),
+                  style: Theme.of(_context).textTheme.headline4,
+                );
+              }),
             ],
           ),
         ),
@@ -34,13 +42,17 @@ class MyHomePage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 16),
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  _context.read<CounterCubit>().decrement();
+                },
                 tooltip: 'Decrement',
-                child: const Icon(Icons.horizontal_rule),
+                child: const Icon(Icons.remove),
               ),
             ),
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                _context.read<CounterCubit>().increment();
+              },
               tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),

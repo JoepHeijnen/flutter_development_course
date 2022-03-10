@@ -47,7 +47,7 @@ class MyHomePage extends StatelessWidget {
                   _pageProvider!.decrement();
                 },
                 tooltip: 'Decrement',
-                child: const Icon(Icons.horizontal_rule),
+                child: const Icon(Icons.remove),
               ),
             ),
             FloatingActionButton(

@@ -40,7 +40,7 @@ class MyHomePage extends ConsumerWidget {
               child: FloatingActionButton(
                 onPressed: () => ref.read(counterProvider.state).state--,
                 tooltip: 'Decrement',
-                child: const Icon(Icons.horizontal_rule),
+                child: const Icon(Icons.remove),
               ),
             ),
             FloatingActionButton(
