@@ -1,9 +1,8 @@
+import 'package:bloc_example/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_example/pages/home_page.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Riverpod Demo'),
+      home: const MyHomePage(title: 'Bloc Demo'),
     );
   }
 }
