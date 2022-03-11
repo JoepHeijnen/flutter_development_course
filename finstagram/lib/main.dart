@@ -1,3 +1,5 @@
+import 'package:finstagram/pages/login_page.dart';
+import 'package:finstagram/pages/register_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,15 +12,13 @@ class Finstagram extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      title: 'Finstagram',
+      theme: ThemeData(primarySwatch: Colors.red),
+      initialRoute: 'login',
+      routes: {
+        'login': (context) => LoginPage(),
+        'register': (context) => RegisterPage(),
+      },
     );
   }
 }
