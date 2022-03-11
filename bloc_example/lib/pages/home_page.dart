@@ -72,7 +72,7 @@ class MyHomePage extends StatelessWidget {
     }
 
     if (_state is CountDecrement) {
-      return const Text('Count did increment to:');
+      return const Text('Count did decrement to:');
     }
 
     return const Text('Counter:');
