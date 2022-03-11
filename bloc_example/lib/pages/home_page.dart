@@ -1,7 +1,8 @@
+import 'package:bloc_example/cubit/count/count_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../providers/home_page_provider.dart';
+import '../models/count.dart';
 
 class MyHomePage extends StatelessWidget {
   final String title;
@@ -10,30 +11,29 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CounterCubit(),
-      child: _buildUI(),
-    );
+    return _buildUI();
   }
 
   Widget _buildUI() {
     return Builder(builder: (_context) {
+      CountCubit _countCubit =
+          BlocProvider.of<CountCubit>(_context, listen: false);
+
       return Scaffold(
         appBar: AppBar(
           title: Text(title),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Counter:'),
-              BlocBuilder<CounterCubit, int>(builder: (context, count) {
-                return Text(
-                  count.toString(),
-                  style: Theme.of(_context).textTheme.headline4,
-                );
-              }),
-            ],
+          child: BlocBuilder<CountCubit, CountState>(
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _getTitle(state),
+                  _getCounter(state),
+                ],
+              );
+            },
           ),
         ),
         floatingActionButton: Row(
@@ -43,7 +43,7 @@ class MyHomePage extends StatelessWidget {
               margin: const EdgeInsets.only(right: 16),
               child: FloatingActionButton(
                 onPressed: () {
-                  _context.read<CounterCubit>().decrement();
+                  _countCubit.decrement();
                 },
                 tooltip: 'Decrement',
                 child: const Icon(Icons.remove),
@@ -51,7 +51,7 @@ class MyHomePage extends StatelessWidget {
             ),
             FloatingActionButton(
               onPressed: () {
-                _context.read<CounterCubit>().increment();
+                _countCubit.increment();
               },
               tooltip: 'Increment',
               child: const Icon(Icons.add),
@@ -59,6 +59,45 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       );
+    });
+  }
+
+  Widget _getTitle(CountState _state) {
+    if (_state is CountChanged) {
+      return const Text('Count is updating...');
+    }
+
+    if (_state is CountIncrement) {
+      return const Text('Count did increment to:');
+    }
+
+    if (_state is CountDecrement) {
+      return const Text('Count did increment to:');
+    }
+
+    return const Text('Counter:');
+  }
+
+  Widget _getCounter(CountState _state) {
+    return Builder(builder: (_context) {
+      if (_state is CountChanged) {
+        return Container(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          child: const CircularProgressIndicator(),
+        );
+      }
+
+      if (_state is CountIncrement) {
+        return Text(_state.count.amount.toString(),
+            style: Theme.of(_context).textTheme.headline4);
+      }
+
+      if (_state is CountDecrement) {
+        return Text(_state.count.amount.toString(),
+            style: Theme.of(_context).textTheme.headline4);
+      }
+
+      return Text('0', style: Theme.of(_context).textTheme.headline4);
     });
   }
 }
