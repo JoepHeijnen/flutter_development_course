@@ -80,6 +80,11 @@ class MyHomePage extends StatelessWidget {
 
   Widget _getCounter(CountState _state) {
     return Builder(builder: (_context) {
+      if (_state is CountInitial) {
+        return Text(_state.count.amount.toString(),
+            style: Theme.of(_context).textTheme.headline4);
+      }
+
       if (_state is CountChanged) {
         return Container(
           margin: const EdgeInsets.symmetric(vertical: 8),
@@ -97,7 +102,7 @@ class MyHomePage extends StatelessWidget {
             style: Theme.of(_context).textTheme.headline4);
       }
 
-      return Text('0', style: Theme.of(_context).textTheme.headline4);
+      return Container();
     });
   }
 }
