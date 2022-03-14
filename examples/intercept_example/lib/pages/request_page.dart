@@ -43,6 +43,8 @@ class RequestPage extends StatelessWidget {
               style: const TextStyle(fontSize: 25),
             ),
           );
+        } else if (_snapshot.hasError) {
+          return const Center(child: Text('An error occurred...'));
         } else {
           return const Center(
             child: CircularProgressIndicator(
@@ -69,6 +71,8 @@ class RequestPage extends StatelessWidget {
               style: const TextStyle(fontSize: 25),
             ),
           );
+        } else if (_snapshot.hasError) {
+          return const Center(child: Text('An error occurred...'));
         } else {
           return const Center(
             child: CircularProgressIndicator(
