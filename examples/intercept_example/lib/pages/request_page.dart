@@ -30,8 +30,7 @@ class RequestPage extends StatelessWidget {
 
   Widget _bitcoinPrice() {
     return FutureBuilder(
-      future: _httpService
-          .get('/simple/price', {'ids': 'bitcoin', 'vs_currencies': 'eur'}),
+      future: _httpService.getBitcoin(),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
         if (_snapshot.hasData) {
           Map _data = jsonDecode(_snapshot.data.toString());
@@ -44,7 +43,7 @@ class RequestPage extends StatelessWidget {
             ),
           );
         } else if (_snapshot.hasError) {
-          return const Center(child: Text('An error occurred...'));
+          return const Center(child: Text('Couldnt load Bitcoin'));
         } else {
           return const Center(
             child: CircularProgressIndicator(
@@ -58,8 +57,7 @@ class RequestPage extends StatelessWidget {
 
   Widget _cardanoPrice() {
     return FutureBuilder(
-      future: _httpService
-          .get('/simple/price', {'ids': 'cardano', 'vs_currencies': 'eur'}),
+      future: _httpService.getCardano(),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
         if (_snapshot.hasData) {
           Map _data = jsonDecode(_snapshot.data.toString());
@@ -72,7 +70,7 @@ class RequestPage extends StatelessWidget {
             ),
           );
         } else if (_snapshot.hasError) {
-          return const Center(child: Text('An error occurred...'));
+          return const Center(child: Text('Couldnt load Cardano'));
         } else {
           return const Center(
             child: CircularProgressIndicator(
