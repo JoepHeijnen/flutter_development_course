@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../services/http_service.dart';
+import 'package:intercept_example/services/crypto_service.dart';
 
 class RequestPage extends StatelessWidget {
-  final HTTPService _httpService = GetIt.instance.get<HTTPService>();
+  final CryptoService _cryptoService = GetIt.instance.get<CryptoService>();
 
   RequestPage({Key? key}) : super(key: key);
 
@@ -30,7 +30,7 @@ class RequestPage extends StatelessWidget {
 
   Widget _bitcoinPrice() {
     return FutureBuilder(
-      future: _httpService.getBitcoin(),
+      future: _cryptoService.getCrypto('bitcoin'),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
         if (_snapshot.hasData) {
           Map _data = jsonDecode(_snapshot.data.toString());
@@ -57,7 +57,7 @@ class RequestPage extends StatelessWidget {
 
   Widget _cardanoPrice() {
     return FutureBuilder(
-      future: _httpService.getCardano(),
+      future: _cryptoService.getCrypto('cardano'),
       builder: (BuildContext _context, AsyncSnapshot _snapshot) {
         if (_snapshot.hasData) {
           Map _data = jsonDecode(_snapshot.data.toString());

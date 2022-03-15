@@ -45,13 +45,10 @@ class AppInterceptors extends QueuedInterceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (_token == null) {
-      print('Getting new token');
-
       await _authService.refresh().then((_response) {
         Map _data = jsonDecode(_response.toString());
         _token = '${_data['gecko_says']}:${Random().nextInt(1000).toString()}';
 
-        print('Got new token: $_token');
         handler.next(options);
       }).catchError((error, stackTrace) {
         handler.reject(error, true);
