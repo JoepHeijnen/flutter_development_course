@@ -43,13 +43,13 @@ class AppInterceptors extends QueuedInterceptor {
 
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     if (_token == null) {
       await _authService.refresh().then((_response) {
         Map _data = jsonDecode(_response.toString());
         _token = '${_data['gecko_says']}:${Random().nextInt(1000).toString()}';
-
-        handler.next(options);
       }).catchError((error, stackTrace) {
         handler.reject(error, true);
       });
@@ -64,27 +64,29 @@ class AppInterceptors extends QueuedInterceptor {
       case DioErrorType.connectTimeout:
       case DioErrorType.sendTimeout:
       case DioErrorType.receiveTimeout:
-        throw DeadlineExceededException(err.requestOptions);
+        return handler.reject(DeadlineExceededException(err.requestOptions));
       case DioErrorType.response:
         switch (err.response?.statusCode) {
           case 400:
-            throw BadRequestException(err.requestOptions);
+            return handler.reject(BadRequestException(err.requestOptions));
           case 401:
-            throw UnauthorizedException(err.requestOptions);
+            return handler.reject(UnauthorizedException(err.requestOptions));
           case 404:
-            throw NotFoundException(err.requestOptions);
+            return handler.reject(NotFoundException(err.requestOptions));
           case 409:
-            throw ConflictException(err.requestOptions);
+            return handler.reject(ConflictException(err.requestOptions));
           case 500:
-            throw InternalServerErrorException(err.requestOptions);
+            return handler
+                .reject(InternalServerErrorException(err.requestOptions));
         }
         break;
       case DioErrorType.cancel:
         break;
       case DioErrorType.other:
-        throw NoInternetConnectionException(err.requestOptions);
+        return handler
+            .reject(NoInternetConnectionException(err.requestOptions));
     }
 
-    return handler.next(err);
+    return handler.reject(err);
   }
 }

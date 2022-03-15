@@ -43,7 +43,7 @@ class RequestPage extends StatelessWidget {
             ),
           );
         } else if (_snapshot.hasError) {
-          return const Center(child: Text('Couldnt load Bitcoin'));
+          return Center(child: Text(_snapshot.error.toString()));
         } else {
           return const Center(
             child: CircularProgressIndicator(
