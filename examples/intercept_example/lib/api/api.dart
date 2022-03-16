@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intercept_example/services/auth_service.dart';
+import 'package:intercept_example/services/event_bus_service.dart';
 import 'exceptions.dart';
 
 class Api {
@@ -36,7 +37,8 @@ class Api {
 class AppInterceptors extends QueuedInterceptor {
   final Dio dio;
   final AuthService _authService = GetIt.instance.get<AuthService>();
-
+  final EventBusService _eventBusService =
+      GetIt.instance.get<EventBusService>();
   String? _token;
 
   AppInterceptors(this.dio);
@@ -72,6 +74,9 @@ class AppInterceptors extends QueuedInterceptor {
           case 401:
             return handler.reject(UnauthorizedException(err.requestOptions));
           case 404:
+            _eventBusService
+                .getInstance()
+                .fire(NotFoundException(err.requestOptions));
             return handler.reject(NotFoundException(err.requestOptions));
           case 409:
             return handler.reject(ConflictException(err.requestOptions));
