@@ -52,6 +52,7 @@ class AppInterceptors extends QueuedInterceptor {
       await _authService.refresh().then((_response) {
         Map _data = jsonDecode(_response.toString());
         _token = '${_data['gecko_says']}:${Random().nextInt(1000).toString()}';
+        handler.next(options);
       }).catchError((error, stackTrace) {
         handler.reject(error, true);
       });
