@@ -1,4 +1,6 @@
+import 'package:finstagram/services/firebase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -9,6 +11,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFromKey = GlobalKey<FormState>();
+  final FirebaseService _firebaseService =
+      GetIt.instance.get<FirebaseService>();
 
   String? _email;
   String? _password;
@@ -131,9 +135,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _loginUser() {
+  void _loginUser() async {
     if (_loginFromKey.currentState!.validate()) {
       _loginFromKey.currentState!.save();
+      bool _result = await _firebaseService.loginUser(
+          email: _email!, password: _password!);
+
+      if (_result) {
+        Navigator.popAndPushNamed(context, 'home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Login failed...')),
+        );
+      }
     }
   }
 }
