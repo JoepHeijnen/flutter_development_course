@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -75,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: TextFormField(
+        initialValue: 'joep.heijnen@topicus.nl',
         decoration: const InputDecoration(hintText: 'Email'),
         onSaved: (_value) {
           setState(() {
@@ -97,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: TextFormField(
+        initialValue: 'Joepheijnen2019',
         obscureText: true,
         decoration: const InputDecoration(hintText: 'Password'),
         onSaved: (_value) {

@@ -23,9 +23,9 @@ class Finstagram extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.red),
       initialRoute: 'login',
       routes: {
-        'home': (context) => HomePage(),
-        'login': (context) => LoginPage(),
-        'register': (context) => RegisterPage(),
+        'home': (context) => const HomePage(),
+        'login': (context) => const LoginPage(),
+        'register': (context) => const RegisterPage(),
       },
     );
   }
