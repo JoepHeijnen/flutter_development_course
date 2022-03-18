@@ -71,6 +71,12 @@ class FirebaseService {
     }
   }
 
+  Future<void> logoutUser() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {}
+  }
+
   Future<Map> getUserData({required String uid}) async {
     DocumentSnapshot _doc =
         await _db.collection(USER_COLLECTION).doc(uid).get();
@@ -103,6 +109,14 @@ class FirebaseService {
     return _db
         .collection(POST_COLLECTION)
         .orderBy('timestamp', descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getPostsForUser() {
+    String _userId = _auth.currentUser!.uid;
+    return _db
+        .collection(POST_COLLECTION)
+        .where('userId', isEqualTo: _userId)
         .snapshots();
   }
 }
