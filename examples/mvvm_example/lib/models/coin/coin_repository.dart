@@ -9,14 +9,13 @@ class CoinRepository {
   CoinRepository();
 
   Future<List<Coin>> getCoins() async {
-    Response? _response = await _cryptoService.getCoins();
-
-    if (_response != null) {
-      List _data = _response.data as List;
+    try {
+      Response? _response = await _cryptoService.getCoins();
+      List _data = _response!.data as List;
       List<Coin> _coins = _data.map((coin) => Coin.fromJson(coin)).toList();
       return _coins;
+    } catch (e) {
+      throw Exception('Something went wrong in CoinRepository');
     }
-
-    return [];
   }
 }

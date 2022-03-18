@@ -10,7 +10,7 @@ class CryptoService {
           .get('/coins/markets', queryParameters: {'vs_currency': 'eur'});
       return _response;
     } catch (e) {
-      return null;
+      throw Exception('Something went wrong in CryptoService');
     }
   }
 }

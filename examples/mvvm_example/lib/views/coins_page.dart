@@ -48,6 +48,12 @@ class _CoinsPageState extends State<CoinsPage> {
       );
     }
 
+    if (loadingStatus == LoadingStatus.error) {
+      return const Center(
+        child: Text('Something went wrong'),
+      );
+    }
+
     if (loadingStatus == LoadingStatus.empty) {
       return const Center(
         child: Text('No results found'),

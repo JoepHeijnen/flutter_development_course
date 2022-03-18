@@ -7,6 +7,7 @@ enum LoadingStatus {
   completed,
   searching,
   empty,
+  error,
 }
 
 class CoinListViewModel with ChangeNotifier {
@@ -20,13 +21,17 @@ class CoinListViewModel with ChangeNotifier {
     loadingStatus = LoadingStatus.searching;
     notifyListeners();
 
-    List<Coin> _coins = await _coinRepository.getCoins();
-    coins = _coins.map((coin) => CoinViewModel(coin: coin)).toList();
+    try {
+      List<Coin> _coins = await _coinRepository.getCoins();
+      coins = _coins.map((coin) => CoinViewModel(coin: coin)).toList();
 
-    if (coins.isEmpty) {
-      loadingStatus = LoadingStatus.empty;
-    } else {
-      loadingStatus = LoadingStatus.completed;
+      if (coins.isEmpty) {
+        loadingStatus = LoadingStatus.empty;
+      } else {
+        loadingStatus = LoadingStatus.completed;
+      }
+    } catch (e) {
+      loadingStatus = LoadingStatus.error;
     }
 
     notifyListeners();
