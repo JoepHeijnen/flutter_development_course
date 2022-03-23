@@ -1,0 +1,4 @@
+# Config options for the dart generator
+pubName: generation_example
+pubVersion: 0.0.1
+pubDescription: "Generation example"

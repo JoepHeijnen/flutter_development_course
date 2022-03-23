@@ -1,0 +1,6 @@
+*
+
+!.gitignore
+!open-generator-config.yaml
+!parro.yaml
+!openapi-generator-cli-5.4.0.jar
