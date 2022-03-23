@@ -1,5 +1,7 @@
 *
 
+!build.sh
+!build2.sh
 !.gitignore
 !open-generator-config.yaml
 !parro.yaml

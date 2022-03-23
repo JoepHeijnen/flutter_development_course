@@ -1,0 +1,1 @@
+java -cp openapi-generator-cli-5.4.0:openapi-dart-generator-3.1.jar org.openapitools.codegen.OpenAPIGenerator generate -i parro.yaml -g dart2-api — enable-post-process-file
