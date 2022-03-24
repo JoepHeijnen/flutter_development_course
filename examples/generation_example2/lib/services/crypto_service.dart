@@ -9,8 +9,7 @@ class CryptoService {
     try {
       Response? _response = await _dio
           .get('/coins/markets', queryParameters: {'vs_currency': 'eur'});
-      List _data = _response.data as List;
-      List<Coin?> _coins = _data.map((coin) => Coin.fromJson(coin)).toList();
+      List<Coin>? _coins = Coin.listFromJson(_response.data);
       return _coins;
     } catch (e) {
       throw Exception('Something went wrong in CryptoService');
