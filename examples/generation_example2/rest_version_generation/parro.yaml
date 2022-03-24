@@ -10,17 +10,19 @@ security: []
 components:
   securitySchemes: {}
   schemas:
-    Account:
+    Coin:
       type: object
       required:
         - id
+        - symbol
         - name
-        - email
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+        symbol:
+          type: string
         name:
           type: string
-        email:
-          type: string
+        current_price:
+          type: integer
+          format: int64

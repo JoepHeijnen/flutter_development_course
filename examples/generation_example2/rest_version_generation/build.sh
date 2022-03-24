@@ -1,4 +1,5 @@
-java -jar openapi-generator-cli-5.4.0.jar generate -i parro.yaml -g dart -c open-generator-config.yaml --global-property models,supportingFiles --enable-post-process-file
+rm -r ../lib/generated
+java -jar openapi-generator-cli-6.0.0-SNAPSHOT.jar generate -i parro.yaml -g dart -c open-generator-config.yaml --global-property models,supportingFiles --enable-post-process-file
 rm -r ../lib/generated/lib/auth
 rm -r ../lib/generated/lib/api_client.dart
 rm -r ../lib/generated/lib/api_exception.dart
@@ -17,4 +18,4 @@ sed -i "/part 'auth\/http_basic_auth.dart';/d" ../lib/generated/lib/api.dart
 sed -i "/final _dateFormatter = DateFormat('yyyy-MM-dd');/d" ../lib/generated/lib/api.dart
 sed -i "/ApiClient defaultApiClient = ApiClient();/d" ../lib/generated/lib/api.dart
 
-sed -i '65,73d' ../lib/generated/lib/api_helper.dart
+sed -i '61,69d' ../lib/generated/lib/api_helper.dart
