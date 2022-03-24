@@ -10,5 +10,5 @@ README.md
 lib/auth/**
 lib/api_client.dart
 lib/api_exception.dart
-lib/doc/**
-lib/test/**
+doc/**
+test/**
