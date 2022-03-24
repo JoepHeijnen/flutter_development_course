@@ -1,1 +1,1 @@
-java -jar openapi-generator-cli-5.4.0.jar generate -i parro.yaml -g dart -c open-generator-config.yaml --enable-post-process-file --global-property modelDocs=false,apiTests=false,modelTests=false
+java -jar openapi-generator-cli-5.4.0.jar generate -i parro.yaml -g dart -c open-generator-config.yaml --enable-post-process-file
