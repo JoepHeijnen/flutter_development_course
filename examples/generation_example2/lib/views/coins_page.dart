@@ -45,9 +45,7 @@ class _CoinsPageState extends State<CoinsPage> {
               return ListTile(
                 title: Text(_coin!.symbol),
                 subtitle: Text(_coin.name),
-                trailing: _coin.currentPrice != null
-                    ? Text(_coin.currentPrice.toString())
-                    : const Text('No Price'),
+                trailing: Text(_coin.currentPrice.toString()),
               );
             }),
           );

@@ -16,6 +16,7 @@ components:
         - id
         - symbol
         - name
+        - current_price
       properties:
         id:
           type: string

@@ -16,7 +16,7 @@ class Coin {
     required this.id,
     required this.symbol,
     required this.name,
-    this.currentPrice,
+    required this.currentPrice,
   });
 
   String id;
@@ -25,13 +25,7 @@ class Coin {
 
   String name;
 
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  num? currentPrice;
+  num currentPrice;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is Coin &&
@@ -46,7 +40,7 @@ class Coin {
     (id.hashCode) +
     (symbol.hashCode) +
     (name.hashCode) +
-    (currentPrice == null ? 0 : currentPrice!.hashCode);
+    (currentPrice.hashCode);
 
   @override
   String toString() => 'Coin[id=$id, symbol=$symbol, name=$name, currentPrice=$currentPrice]';
@@ -56,9 +50,7 @@ class Coin {
       json[r'id'] = id;
       json[r'symbol'] = symbol;
       json[r'name'] = name;
-    if (currentPrice != null) {
       json[r'current_price'] = currentPrice;
-    }
     return json;
   }
 
@@ -84,7 +76,7 @@ class Coin {
         id: mapValueOfType<String>(json, r'id')!,
         symbol: mapValueOfType<String>(json, r'symbol')!,
         name: mapValueOfType<String>(json, r'name')!,
-        currentPrice: mapValueOfType<num>(json, r'current_price'),
+        currentPrice: mapValueOfType<num>(json, r'current_price')!,
       );
     }
     return null;
@@ -137,6 +129,7 @@ class Coin {
     'id',
     'symbol',
     'name',
+    'current_price',
   };
 }
 
