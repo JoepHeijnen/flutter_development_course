@@ -7,8 +7,5 @@ pubspec.lock
 pubspec.yaml
 README.md
 
-lib/auth/**
-lib/api_client.dart
-lib/api_exception.dart
 doc/**
 test/**
