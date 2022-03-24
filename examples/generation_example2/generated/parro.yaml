@@ -6,7 +6,9 @@ info:
     name: MIT
 servers: []
 paths: {}
+security: []
 components:
+  securitySchemes: {}
   schemas:
     Account:
       type: object
