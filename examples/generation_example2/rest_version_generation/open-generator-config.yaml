@@ -2,3 +2,4 @@
 pubName: generation_example
 pubVersion: 0.0.1
 pubDescription: "Generation example"
+sourceFolder: "../lib/generated"
