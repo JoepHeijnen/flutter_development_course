@@ -1,1 +1,0 @@
-java -cp "openapi-generator-cli-5.4.0.jar;openapi-dart-generator-5.11.jar" org.openapitools.codegen.OpenAPIGenerator generate -i parro.yaml --additional-properties pubName=counterapi -g dart2-api --enable-post-process-file
