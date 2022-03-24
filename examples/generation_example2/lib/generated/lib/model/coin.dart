@@ -31,7 +31,7 @@ class Coin {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  int? currentPrice;
+  num? currentPrice;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is Coin &&
@@ -84,7 +84,7 @@ class Coin {
         id: mapValueOfType<String>(json, r'id')!,
         symbol: mapValueOfType<String>(json, r'symbol')!,
         name: mapValueOfType<String>(json, r'name')!,
-        currentPrice: mapValueOfType<int>(json, r'current_price'),
+        currentPrice: mapValueOfType<num>(json, r'current_price'),
       );
     }
     return null;

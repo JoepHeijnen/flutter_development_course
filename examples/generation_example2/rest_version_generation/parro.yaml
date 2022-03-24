@@ -24,5 +24,4 @@ components:
         name:
           type: string
         current_price:
-          type: integer
-          format: int64
+          type: Double

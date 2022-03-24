@@ -1,5 +1,5 @@
 rm -r ../lib/generated
-java -jar openapi-generator-cli-6.0.0-SNAPSHOT.jar generate -i parro.yaml -g dart -c open-generator-config.yaml --global-property models,supportingFiles --enable-post-process-file
+java -jar openapi-generator-cli-6.0.0-SNAPSHOT.jar generate -i parro.yaml -g dart -c open-generator-config.yaml --global-property models,supportingFiles --type-mappings=Double=num --enable-post-process-file
 rm -r ../lib/generated/lib/auth
 rm -r ../lib/generated/lib/api_client.dart
 rm -r ../lib/generated/lib/api_exception.dart
