@@ -9,3 +9,5 @@ pubspec.yaml
 README.md
 
 lib/auth/**
+api_client.dart
+api_exception.dart
