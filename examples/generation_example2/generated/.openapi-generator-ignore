@@ -1,1 +1,9 @@
 .gitignore
+.dart_tool
+.openapi-generator
+.packages
+.travis.yml
+analysis_options.yaml
+pubspec.lock
+pubspec.yaml
+README.md
