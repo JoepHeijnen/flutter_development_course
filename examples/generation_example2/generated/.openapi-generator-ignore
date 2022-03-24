@@ -1,6 +1,6 @@
 .gitignore
 .dart_tool
-.openapi-generator
+.openapi-generator/**
 .packages
 .travis.yml
 analysis_options.yaml
@@ -9,5 +9,5 @@ pubspec.yaml
 README.md
 
 lib/auth/**
-api_client.dart
-api_exception.dart
+lib/api_client.dart
+lib/api_exception.dart
