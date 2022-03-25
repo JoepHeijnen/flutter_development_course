@@ -7,8 +7,6 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SharedPreferences.getInstance();
-
     return CupertinoPageScaffold(
       child: _dataCard(),
     );
@@ -28,7 +26,6 @@ class HistoryPage extends StatelessWidget {
               widthFactor: 0.75,
               heightFactor: 0.25,
               child: InfoCard(
-                flex: 1,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
