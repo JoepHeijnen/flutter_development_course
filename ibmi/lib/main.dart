@@ -1,24 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:ibmi/pages/main_page.dart';
 
 void main() {
-  runApp(const Ibmi());
+  runApp(const IBMI());
 }
 
-class Ibmi extends StatelessWidget {
-  const Ibmi({Key? key}) : super(key: key);
+class IBMI extends StatelessWidget {
+  const IBMI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+    return CupertinoApp(
+      title: 'IBMI',
+      initialRoute: '/',
+      routes: {
+        '/': (BuildContext _context) => const MainPage(),
+      },
     );
   }
 }
