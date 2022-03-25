@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ibmi/widgets/info_card.dart';
@@ -36,15 +38,21 @@ class _BMIPageState extends State<BMIPage> {
                   _weightSelectContainer(),
                 ],
               ),
-              const SizedBox(height: 16),
+              _gutter(),
               _heightSelectContainer(),
-              const SizedBox(height: 16),
+              _gutter(),
               _genderSelectContainer(),
+              _gutter(),
+              _calculateButton(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _gutter() {
+    return const SizedBox(height: 16);
   }
 
   Widget _ageSelectContainer() {
@@ -224,6 +232,53 @@ class _BMIPageState extends State<BMIPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _calculateButton() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: CupertinoButton.filled(
+        child: const Text('Calculate BMI'),
+        onPressed: () {
+          if (_height > 0 && _weight > 0 && _age > 0) {
+            double _bmi = 703 * (_weight / pow(_height, 2));
+            _showResultDialog(_bmi);
+          }
+        },
+      ),
+    );
+  }
+
+  void _showResultDialog(double _bmi) {
+    String? _status;
+
+    if (_bmi < 18.5) {
+      _status = 'Underweight';
+    } else if (_bmi >= 18.5 && _bmi < 25) {
+      _status = 'Normal';
+    } else if (_bmi >= 25 && _bmi < 30) {
+      _status = 'Overweight';
+    } else {
+      _status = 'Obese';
+    }
+
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext _context) {
+        return CupertinoAlertDialog(
+          title: Text(_status!),
+          content: Text(_bmi.toStringAsFixed(2)),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.pop(_context);
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }
