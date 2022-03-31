@@ -19,8 +19,10 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: '/group/:id',
-        builder: (BuildContext context, GoRouterState state) =>
-            const GroupPage(),
+        builder: (BuildContext context, GoRouterState state) {
+          String id = state.params['id']!;
+          return GroupPage(id: id);
+        },
       ),
     ],
   );

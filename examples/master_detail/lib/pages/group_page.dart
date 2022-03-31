@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GroupPage extends StatelessWidget {
-  const GroupPage({Key? key}) : super(key: key);
+  String id;
+  GroupPage({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    var id = arguments['id'] ?? 'Nothing';
-
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => GoRouter.of(context).go('/')),
         title: const Text('Detail'),
       ),
       body: Center(
