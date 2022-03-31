@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:master_detail/pages/group_page.dart';
-import 'package:master_detail/pages/groups_page.dart';
+import 'package:master_detail/navigation/routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,29 +8,12 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  final GoRouter _router = GoRouter(
-    routes: <GoRoute>[
-      GoRoute(
-        path: '/',
-        builder: (BuildContext context, GoRouterState state) =>
-            const GroupsPage(),
-      ),
-      GoRoute(
-        path: '/group/:id',
-        builder: (BuildContext context, GoRouterState state) {
-          String id = state.params['id']!;
-          return GroupPage(id: id);
-        },
-      ),
-    ],
-  );
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
       title: 'GoRouter Example',
     );
   }

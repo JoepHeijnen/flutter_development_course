@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:master_detail/pages/group_page.dart';
 
 class Item {
   int id;
@@ -16,7 +15,25 @@ class GroupsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Master'),
+        title: const Text('Groups'),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Groups'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today), label: 'Calendar'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.chat), label: 'Conversation'),
+        ],
+        onTap: (int index) {
+          if (index == 0) {
+            GoRouter.of(context).push('/groups');
+          } else if (index == 1) {
+            GoRouter.of(context).push('/calendar');
+          } else if (index == 2) {
+            GoRouter.of(context).push('/conversations');
+          }
+        },
       ),
       body: SafeArea(
         child: _listView(),
@@ -47,7 +64,7 @@ class GroupsPage extends StatelessWidget {
           title: Text(_item.title),
           subtitle: const Text('Details'),
           onTap: () {
-            GoRouter.of(context).push('/group/${_item.id}');
+            GoRouter.of(context).push('/groups/${_item.id}');
           },
         );
       }),
