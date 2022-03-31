@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:master_detail/pages/group_page.dart';
 
 class Item {
@@ -45,7 +46,9 @@ class GroupsPage extends StatelessWidget {
         return ListTile(
           title: Text(_item.title),
           subtitle: const Text('Details'),
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).push('/group/${_item.id}');
+          },
         );
       }),
     );

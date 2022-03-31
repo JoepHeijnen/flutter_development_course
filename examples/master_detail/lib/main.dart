@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:master_detail/pages/group_page.dart';
 import 'package:master_detail/pages/groups_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  final GoRouter _router = GoRouter(
+    routes: <GoRoute>[
+      GoRoute(
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) =>
+            const GroupsPage(),
+      ),
+      GoRoute(
+        path: '/group/:id',
+        builder: (BuildContext context, GoRouterState state) =>
+            const GroupPage(),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Master Detail',
-      initialRoute: '/',
-      routes: {
-        '/': (BuildContext _context) => const GroupsPage(),
-      },
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
+      title: 'GoRouter Example',
     );
   }
 }
