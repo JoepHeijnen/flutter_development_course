@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:master_detail/cubit/master_detail_cubit.dart';
+import 'package:master_detail/navigation/routes.dart';
 import 'package:master_detail/services/items_service.dart';
 import 'package:master_detail/widgets/layout/layout.dart';
 
@@ -21,9 +22,11 @@ class MyApp extends StatelessWidget {
         BlocProvider<MasterDetailCubit>(
             create: ((context) => MasterDetailCubit()))
       ],
-      child: const MaterialApp(
+      child: MaterialApp.router(
         title: 'GoRouter Example',
-        home: Layout(),
+        debugShowCheckedModeBanner: false,
+        routeInformationParser: router.routeInformationParser,
+        routerDelegate: router.routerDelegate,
       ),
     );
   }

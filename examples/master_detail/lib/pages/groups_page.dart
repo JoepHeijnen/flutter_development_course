@@ -82,14 +82,15 @@ class _GroupsPageState extends State<GroupsPage> {
                     : const Text('Details'),
                 onTap: () {
                   _masterDetailCubit!.selectItem(_item);
+                  GoRouter.of(context).push('/group/${_item.id}');
 
                   if (MediaQuery.of(context).size.width <= 768) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext _context) {
-                        return const GroupsDetailPage();
-                      }),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (BuildContext _context) {
+                    //     return const GroupsDetailPage();
+                    //   }),
+                    // );
                   }
                 },
               );
