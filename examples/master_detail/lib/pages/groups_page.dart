@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:master_detail/cubit/master_detail_cubit.dart';
+import 'package:master_detail/models/item.dart';
 import 'package:master_detail/pages/groups_detail_page.dart';
 
-class Item {
-  int id;
-  String title;
+class GroupsPage extends StatefulWidget {
+  const GroupsPage({Key? key}) : super(key: key);
 
-  Item({required this.id, required this.title});
+  @override
+  State<GroupsPage> createState() => _GroupsPageState();
 }
 
-class GroupsPage extends StatelessWidget {
-  const GroupsPage({Key? key}) : super(key: key);
+class _GroupsPageState extends State<GroupsPage> {
+  MasterDetailCubit? _masterDetailCubit;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _masterDetailCubit =
+        BlocProvider.of<MasterDetailCubit>(context, listen: false);
+
+    _masterDetailCubit!.loadItems();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,37 +56,49 @@ class GroupsPage extends StatelessWidget {
   }
 
   Widget _listView() {
-    List<Item> _items = [
-      Item(id: 1, title: 'List item 1'),
-      Item(id: 2, title: 'List item 2'),
-      Item(id: 3, title: 'List item 3'),
-      Item(id: 4, title: 'List item 4'),
-      Item(id: 5, title: 'List item 5'),
-      Item(id: 6, title: 'List item 6'),
-      Item(id: 7, title: 'List item 7'),
-      Item(id: 8, title: 'List item 8'),
-      Item(id: 9, title: 'List item 9'),
-      Item(id: 10, title: 'List item 10'),
-    ];
+    return BlocBuilder<MasterDetailCubit, MasterDetailState>(
+      builder: (context, state) {
+        if (state is NoItemsState) {
+          return const Center(
+            child: Text('No items loaded...'),
+          );
+        } else if (state is LoadingItemsState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is LoadedItemsState) {
+          List<Item> _items = state.elements;
 
-    return ListView.builder(
-      itemCount: _items.length,
-      itemBuilder: ((context, index) {
-        Item _item = _items[index];
+          return ListView.builder(
+            itemCount: _items.length,
+            itemBuilder: ((context, index) {
+              Item _item = _items[index];
+              bool _isSelected = _item.id == state.selectedElement.id;
 
-        return ListTile(
-          title: Text(_item.title),
-          subtitle: const Text('Details'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (BuildContext _context) {
-                return GroupsDetailPage(id: _item.id.toString());
-              }),
-            );
-          },
-        );
-      }),
+              return ListTile(
+                title: Text(_item.name),
+                subtitle: _isSelected
+                    ? const Text('Selected')
+                    : const Text('Details'),
+                onTap: () {
+                  _masterDetailCubit!.selectItem(_item);
+
+                  if (MediaQuery.of(context).size.width <= 768) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext _context) {
+                        return GroupsDetailPage();
+                      }),
+                    );
+                  }
+                },
+              );
+            }),
+          );
+        }
+
+        throw Exception('Unexpected state');
+      },
     );
   }
 }

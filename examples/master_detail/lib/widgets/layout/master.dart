@@ -6,6 +6,6 @@ class Master extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GroupsPage();
+    return const GroupsPage();
   }
 }

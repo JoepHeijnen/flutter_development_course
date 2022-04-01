@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:master_detail/cubit/master_detail_cubit.dart';
 
 class GroupsDetailPage extends StatelessWidget {
-  String? id;
-  GroupsDetailPage({Key? key, this.id}) : super(key: key);
+  const GroupsDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Details Group'),
-      ),
-      body: Center(
-        child: id != null ? Text(id!) : Text('Nothing'),
-      ),
+    return BlocBuilder<MasterDetailCubit, MasterDetailState>(
+      builder: (context, state) {
+        if (state is LoadedItemsState) {
+          return Scaffold(
+              appBar: AppBar(
+                title: Text(state.selectedElement.name),
+              ),
+              body: Center(
+                child: Text(state.selectedElement.name),
+              ));
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Details'),
+          ),
+          body: Container(),
+        );
+      },
     );
   }
 }
