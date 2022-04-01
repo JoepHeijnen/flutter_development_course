@@ -15,7 +15,7 @@ class GroupsDetailPage extends StatelessWidget {
         title: const Text('Details Group'),
       ),
       body: Center(
-        child: Text('Test'),
+        child: id != null ? Text(id!) : Text('Nothing'),
       ),
     );
   }
