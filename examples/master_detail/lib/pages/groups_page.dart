@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:master_detail/pages/groups_detail_page.dart';
 
 class Item {
   int id;
@@ -64,7 +65,12 @@ class GroupsPage extends StatelessWidget {
           title: Text(_item.title),
           subtitle: const Text('Details'),
           onTap: () {
-            GoRouter.of(context).push('/groups/${_item.id}');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (BuildContext _context) {
+                return GroupsDetailPage(id: _item.id.toString());
+              }),
+            );
           },
         );
       }),

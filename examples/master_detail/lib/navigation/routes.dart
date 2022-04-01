@@ -18,7 +18,7 @@ GoRoute getRoute(String path) {
   return GoRoute(
     path: path,
     builder: (BuildContext context, GoRouterState state) {
-      return Layout(routerState: state);
+      return Layout();
     },
   );
 }

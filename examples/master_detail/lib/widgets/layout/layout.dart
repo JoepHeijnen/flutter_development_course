@@ -4,9 +4,7 @@ import 'package:master_detail/widgets/layout/detail.dart';
 import 'package:master_detail/widgets/layout/master.dart';
 
 class Layout extends StatefulWidget {
-  GoRouterState routerState;
-
-  Layout({Key? key, required this.routerState}) : super(key: key);
+  Layout({Key? key}) : super(key: key);
 
   @override
   State<Layout> createState() => _LayoutState();
