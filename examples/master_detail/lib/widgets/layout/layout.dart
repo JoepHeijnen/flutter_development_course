@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:master_detail/widgets/layout/detail.dart';
 import 'package:master_detail/widgets/layout/master.dart';
 
 class Layout extends StatefulWidget {
-  Layout({Key? key}) : super(key: key);
+  const Layout({Key? key}) : super(key: key);
 
   @override
   State<Layout> createState() => _LayoutState();

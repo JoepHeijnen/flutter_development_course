@@ -87,7 +87,7 @@ class _GroupsPageState extends State<GroupsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (BuildContext _context) {
-                        return GroupsDetailPage();
+                        return const GroupsDetailPage();
                       }),
                     );
                   }
