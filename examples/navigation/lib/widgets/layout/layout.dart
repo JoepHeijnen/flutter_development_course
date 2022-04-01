@@ -15,7 +15,7 @@ class _LayoutState extends State<Layout> {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > 768) {
-          return _mobileLayout();
+          return _tabletLayout();
         } else {
           return const Master();
         }
@@ -23,7 +23,7 @@ class _LayoutState extends State<Layout> {
     );
   }
 
-  Widget _mobileLayout() {
+  Widget _tabletLayout() {
     return Row(
       children: const [
         SizedBox(width: 450, child: Master()),

@@ -18,16 +18,9 @@ class MyApp extends StatelessWidget {
     initialLocation: '/groups',
     routes: <GoRoute>[
       GoRoute(
-          path: '/groups',
-          builder: (BuildContext context, GoRouterState state) => GroupsPage(),
-          routes: [
-            GoRoute(
-              path: ':id',
-              builder: (BuildContext context, GoRouterState state) {
-                return GroupsDetailPage(id: state.params['id']);
-              },
-            ),
-          ]),
+        path: '/groups',
+        builder: (BuildContext context, GoRouterState state) => GroupsPage(),
+      ),
     ],
   );
 
