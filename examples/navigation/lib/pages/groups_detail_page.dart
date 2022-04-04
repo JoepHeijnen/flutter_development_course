@@ -9,10 +9,14 @@ class GroupsDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Details'),
+        title: id != null ? Text('Group item ${id!}') : const Text('Details'),
       ),
       body: Center(
-        child: id != null ? Text(id!) : const Text('Nothing'),
+        child: id != null
+            ? Text(id!,
+                style: const TextStyle(fontSize: 30, color: Colors.blue))
+            : const Text('Nothing',
+                style: TextStyle(fontSize: 30, color: Colors.blue)),
       ),
     );
   }

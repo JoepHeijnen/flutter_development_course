@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:navigation/pages/groups_detail_page.dart';
-import 'package:navigation/pages/groups_page.dart';
 import 'package:navigation/services/items_service.dart';
+import 'package:navigation/widgets/layout/layout.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,16 +15,28 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
   final GoRouter _router = GoRouter(
+    navigatorBuilder: ((_, __, child) {
+      return Layout(child: child);
+    }),
     initialLocation: '/groups',
     routes: <GoRoute>[
       GoRoute(
         path: '/groups',
-        builder: (BuildContext context, GoRouterState state) => GroupsPage(),
+        builder: (BuildContext context, GoRouterState state) =>
+            GroupsDetailPage(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            builder: (BuildContext context, GoRouterState state) {
+              String? _id = state.params['id'];
+              return GroupsDetailPage(id: _id);
+            },
+          ),
+        ],
       ),
     ],
   );
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

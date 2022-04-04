@@ -3,7 +3,8 @@ import 'package:navigation/widgets/layout/detail.dart';
 import 'package:navigation/widgets/layout/master.dart';
 
 class Layout extends StatefulWidget {
-  const Layout({Key? key}) : super(key: key);
+  final Widget? child;
+  Layout({Key? key, this.child}) : super(key: key);
 
   @override
   State<Layout> createState() => _LayoutState();
@@ -25,9 +26,9 @@ class _LayoutState extends State<Layout> {
 
   Widget _tabletLayout() {
     return Row(
-      children: const [
+      children: [
         SizedBox(width: 450, child: Master()),
-        Expanded(child: Detail())
+        Expanded(child: widget.child ?? Detail())
       ],
     );
   }
