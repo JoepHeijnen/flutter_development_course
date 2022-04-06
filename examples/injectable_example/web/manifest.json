@@ -1,6 +1,6 @@
 {
-    "name": "injectable",
-    "short_name": "injectable",
+    "name": "injectable_example",
+    "short_name": "injectable_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-package com.example.injectable
+package com.example.injectable_example
 
 import io.flutter.embedding.android.FlutterActivity
 

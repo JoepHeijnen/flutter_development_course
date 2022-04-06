@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(injectable LANGUAGES CXX)
+project(injectable_example LANGUAGES CXX)
 
-set(BINARY_NAME "injectable")
+set(BINARY_NAME "injectable_example")
 
 cmake_policy(SET CMP0063 NEW)
 
