@@ -1,6 +1,6 @@
-import "package:flutter/material.dart";
-import "package:injectable_example2/config/injection.dart";
-import "package:injectable_example2/views/coins_page.dart";
+import 'package:flutter/material.dart';
+import 'package:injectable_example2/config/injection.dart';
+import 'package:injectable_example2/views/coins_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: "Injection Example",
+      title: 'Injection Example',
       home: CoinsPage(),
     );
   }

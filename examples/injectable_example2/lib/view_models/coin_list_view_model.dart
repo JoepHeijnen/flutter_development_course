@@ -1,7 +1,7 @@
-import "package:flutter/material.dart";
-import "package:injectable_example2/models/coin/coin.dart";
-import "package:injectable_example2/repositories/coin_repository.dart";
-import "package:injectable_example2/view_models/coin_view_model.dart";
+import 'package:flutter/material.dart';
+import 'package:injectable_example2/models/coin/coin.dart';
+import 'package:injectable_example2/repositories/coin_repository.dart';
+import 'package:injectable_example2/view_models/coin_view_model.dart';
 
 enum LoadingStatus {
   completed,
