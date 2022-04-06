@@ -13,10 +13,10 @@ class Coin {
 
   factory Coin.fromJson(Map<String, dynamic> json) {
     return Coin(
-      id: json['id'],
-      symbol: json['symbol'],
-      name: json['name'],
-      price: json['current_price'],
+      id: json["id"],
+      symbol: json["symbol"],
+      name: json["name"],
+      price: json["current_price"],
     );
   }
 }

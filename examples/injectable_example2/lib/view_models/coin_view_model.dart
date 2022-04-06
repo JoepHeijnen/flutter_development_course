@@ -1,4 +1,4 @@
-import 'package:injectable_example2/models/coin/coin.dart';
+import "package:injectable_example2/models/coin/coin.dart";
 
 class CoinViewModel {
   final Coin _coin;
@@ -18,6 +18,6 @@ class CoinViewModel {
   }
 
   String get price {
-    return '€ ${_coin.price.toString()}';
+    return "€ ${_coin.price.toString()}";
   }
 }

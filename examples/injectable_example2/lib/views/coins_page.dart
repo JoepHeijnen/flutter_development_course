@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:injectable_example2/view_models/coin_list_view_model.dart';
-import 'package:injectable_example2/view_models/coin_view_model.dart';
-import 'package:provider/provider.dart';
+import "package:flutter/material.dart";
+import "package:injectable_example2/view_models/coin_list_view_model.dart";
+import "package:injectable_example2/view_models/coin_view_model.dart";
+import "package:provider/provider.dart";
 
 class CoinsPage extends StatefulWidget {
   const CoinsPage({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _CoinsPageState extends State<CoinsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Coins'),
+        title: const Text("Coins"),
       ),
       body: SafeArea(
         child: ChangeNotifierProvider<CoinListViewModel>(
@@ -50,13 +50,13 @@ class _CoinsPageState extends State<CoinsPage> {
 
     if (loadingStatus == LoadingStatus.error) {
       return const Center(
-        child: Text('Something went wrong'),
+        child: Text("Something went wrong"),
       );
     }
 
     if (loadingStatus == LoadingStatus.empty) {
       return const Center(
-        child: Text('No results found'),
+        child: Text("No results found"),
       );
     }
 
