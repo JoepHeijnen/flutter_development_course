@@ -15,7 +15,6 @@ import '../services/crypto_service.dart'
 _i1.GetIt $initGetIt(_i1.GetIt get,
     {String? environment, _i2.EnvironmentFilter? environmentFilter}) {
   final gh = _i2.GetItHelper(get, environment, environmentFilter);
-  gh.factory<_i3.CryptoService>(() => _i3.CryptoService(),
-      instanceName: 'Prod');
+  gh.factory<_i3.CryptoService>(() => _i3.CryptoService());
   return get;
 }
