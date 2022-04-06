@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
+@Named('Prod')
+@injectable
 class CryptoService {
   CryptoService();
   final _dio = Dio(BaseOptions(baseUrl: 'https://api.coingecko.com/api/v3'));
