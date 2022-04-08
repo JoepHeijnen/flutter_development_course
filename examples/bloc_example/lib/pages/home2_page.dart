@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/count/count2_cubit.dart';
 import '../models/count.dart';
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class MyHomePage2 extends StatelessWidget {
+  const MyHomePage2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class MyHomePage extends StatelessWidget {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: const Text('Test'),
         ),
         body: Center(
           child: BlocBuilder<CountCubit2, Count>(

@@ -2,12 +2,8 @@ import 'package:bloc_example/cubit/count/count_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/count.dart';
-
 class MyHomePage extends StatelessWidget {
-  final String title;
-
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +12,11 @@ class MyHomePage extends StatelessWidget {
 
   Widget _buildUI() {
     return Builder(builder: (_context) {
-      CountCubit _countCubit =
-          BlocProvider.of<CountCubit>(_context, listen: false);
+      CountCubit _countCubit = BlocProvider.of<CountCubit>(_context, listen: false);
 
       return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: const Text('Test'),
         ),
         body: Center(
           child: BlocBuilder<CountCubit, CountState>(
@@ -81,8 +76,7 @@ class MyHomePage extends StatelessWidget {
   Widget _getCounter(CountState _state) {
     return Builder(builder: (_context) {
       if (_state is CountInitial) {
-        return Text(_state.count.amount.toString(),
-            style: Theme.of(_context).textTheme.headline4);
+        return Text(_state.count.amount.toString(), style: Theme.of(_context).textTheme.headline4);
       }
 
       if (_state is CountChanged) {
@@ -93,13 +87,11 @@ class MyHomePage extends StatelessWidget {
       }
 
       if (_state is CountIncrement) {
-        return Text(_state.count.amount.toString(),
-            style: Theme.of(_context).textTheme.headline4);
+        return Text(_state.count.amount.toString(), style: Theme.of(_context).textTheme.headline4);
       }
 
       if (_state is CountDecrement) {
-        return Text(_state.count.amount.toString(),
-            style: Theme.of(_context).textTheme.headline4);
+        return Text(_state.count.amount.toString(), style: Theme.of(_context).textTheme.headline4);
       }
 
       return Container();
