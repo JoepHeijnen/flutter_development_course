@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/count.dart';
 
 final countListProvider = StateNotifierProvider<CountList, List<Count>>((ref) {
-  return CountList([Count(amount: 0, type: Type.unknown)]);
+  return CountList([]);
 });
 
 final totalCountProvider = Provider<int>((ref) {
@@ -25,11 +25,11 @@ final totalCountProvider = Provider<int>((ref) {
 class CountList extends StateNotifier<List<Count>> {
   CountList([List<Count>? initialTodos]) : super(initialTodos ?? []);
 
-  void increment() {
-    state = [...state, Count(amount: 1, type: Type.increment)];
+  void increment(int previousAmount) {
+    state = [...state, Count(amount: 1, type: Type.increment, previousAmount: previousAmount)];
   }
 
-  void decrement() {
-    state = [...state, Count(amount: 1, type: Type.decrement)];
+  void decrement(int previousAmount) {
+    state = [...state, Count(amount: 1, type: Type.decrement, previousAmount: previousAmount)];
   }
 }
