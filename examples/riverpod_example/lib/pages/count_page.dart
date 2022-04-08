@@ -1,60 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_example/models/count.dart';
 import '../providers/count_page_provider.dart';
 
 class CountPage extends ConsumerWidget {
-  final String title;
+  WidgetRef? _ref;
 
-  const CountPage({Key? key, required this.title}) : super(key: key);
+  CountPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return _buildUI(ref);
+    _ref = ref;
+    return Scaffold(
+      appBar: AppBar(
+        title: _title(),
+      ),
+      body: _listCounts(),
+      floatingActionButton: _buttons(),
+    );
   }
 
-  Widget _buildUI(WidgetRef ref) {
-    final notifier = ref.watch(counterProvider);
+  Widget _title() {
+    final total = _ref!.watch(totalCountProvider);
+    return Text('Amount: ${total.toString()}');
+  }
 
-    return Builder(builder: (_context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Counter ${notifier.type}:'),
-              Text(
-                notifier.amount.toString(),
-                style: Theme.of(_context).textTheme.headline4,
-              )
-            ],
+  Widget _listCounts() {
+    final list = _ref!.watch(countListProvider);
+
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: ((context, index) {
+        Count item = list[index];
+        return ListTile(
+          title: Text(item.amount.toString()),
+          subtitle: Text(item.getType()),
+        );
+      }),
+    );
+  }
+
+  Widget _buttons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 16),
+          child: FloatingActionButton(
+            onPressed: () {
+              _ref!.read(countListProvider.notifier).decrement();
+            },
+            tooltip: 'Decrement',
+            child: const Icon(Icons.remove),
           ),
         ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 16),
-              child: FloatingActionButton(
-                onPressed: () {
-                  ref.read(counterProvider.notifier).decrement();
-                },
-                tooltip: 'Decrement',
-                child: const Icon(Icons.remove),
-              ),
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                ref.read(counterProvider.notifier).increment();
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
-          ],
+        FloatingActionButton(
+          onPressed: () {
+            _ref!.read(countListProvider.notifier).increment();
+          },
+          tooltip: 'Increment',
+          child: const Icon(Icons.add),
         ),
-      );
-    });
+      ],
+    );
   }
 }
