@@ -5,3 +5,5 @@ linter:
     prefer_single_quotes: true
     prefer_relative_imports: true
     constant_identifier_names: false
+    unnecessary_lambdas: true
+    require_trailing_commas: true
