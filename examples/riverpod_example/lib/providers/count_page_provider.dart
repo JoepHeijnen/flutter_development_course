@@ -32,4 +32,8 @@ class CountList extends StateNotifier<List<Count>> {
   void decrement(int previousAmount) {
     state = [...state, Count(amount: 1, type: Type.decrement, previousAmount: previousAmount)];
   }
+
+  void clear() {
+    state = [];
+  }
 }

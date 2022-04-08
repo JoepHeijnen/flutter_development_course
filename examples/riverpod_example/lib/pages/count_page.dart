@@ -48,6 +48,16 @@ class CountPage extends ConsumerWidget {
         Container(
           margin: const EdgeInsets.only(right: 16),
           child: FloatingActionButton(
+              onPressed: () {
+                _ref!.read(countListProvider.notifier).clear();
+              },
+              tooltip: 'Clear',
+              backgroundColor: Colors.red,
+              child: const Icon(Icons.clear)),
+        ),
+        Container(
+          margin: const EdgeInsets.only(right: 16),
+          child: FloatingActionButton(
             onPressed: () {
               _ref!.read(countListProvider.notifier).decrement(_ref!.read(totalCountProvider));
             },
