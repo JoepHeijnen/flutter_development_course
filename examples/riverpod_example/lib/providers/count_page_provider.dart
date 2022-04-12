@@ -26,12 +26,12 @@ class CountList extends StateNotifier<List<Count>> {
   CountList([List<Count>? initialTodos]) : super(initialTodos ?? []);
 
   void increment(int previousAmount) async {
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
     state = [...state, Count(amount: 1, type: Type.increment, previousAmount: previousAmount)];
   }
 
   void decrement(int previousAmount) async {
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
     state = [...state, Count(amount: 1, type: Type.decrement, previousAmount: previousAmount)];
   }
 
