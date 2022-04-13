@@ -55,7 +55,28 @@ String parameterToString(dynamic value) {
   if (value is DateTime) {
     return value.toUtc().toIso8601String();
   }
+  if (value is RAbsenceDaypart) {
+    return RAbsenceDaypartTypeTransformer().encode(value).toString();
+  }
+  if (value is RAbsenceReasonType) {
+    return RAbsenceReasonTypeTypeTransformer().encode(value).toString();
+  }
+  if (value is RAttachmentType) {
+    return RAttachmentTypeTypeTransformer().encode(value).toString();
+  }
+  if (value is RPricingPlan) {
+    return RPricingPlanTypeTransformer().encode(value).toString();
+  }
   return value.toString();
+}
+
+/// Returns the decoded body as UTF-8 if the given headers indicate an 'application/json'
+/// content type. Otherwise, returns the decoded body as decoded by dart:http package.
+Future<String> _decodeBodyBytes(Response response) async {
+  final contentType = response.headers['content-type'];
+  return contentType != null && contentType.toLowerCase().startsWith('application/json')
+    ? response.bodyBytes.isEmpty ? '' : utf8.decode(response.bodyBytes)
+    : response.body;
 }
 
 /// Returns a valid [T] value found at the specified Map [key], null otherwise.

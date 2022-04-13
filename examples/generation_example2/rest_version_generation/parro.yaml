@@ -1,28 +1,520 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Swagger Parro
+  title: Parro Open Api Spec
   license:
     name: MIT
-servers: []
-paths: {}
-security: []
+
+# We only care about schemas, but this prevents codegen error: "attribute paths is missing"
+paths:
+  /dummy:
+    get:
+      responses:
+        '200':
+          description: OK
+
+
 components:
-  securitySchemes: {}
   schemas:
-    Coin:
+    Linkable:
       type: object
-      required:
-        - id
-        - symbol
-        - name
-        - current_price
+      discriminator:
+        propertyName: $type
+        mapping:
+          geonLinkable: '#/components/schemas/GeonLinkable'
+          rAbsenceReport: '#/components/schemas/RAbsenceReport'
+          rAbsentChildPrimer: '#/components/schemas/RAbsentChildPrimer'
+          rDailyAbsenceCount: '#/components/schemas/RDailyAbsenceCount'
+          rParnasSysAbsenceReason: '#/components/schemas/RParnasSysAbsenceReason'
+          rParnasSysAbsenceReport: '#/components/schemas/RParnasSysAbsenceReport'
       properties:
+            links:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Link'
+            permissions:
+                type: array
+                items:
+                  type: Permission
+            additionalObjects:
+                type: object
+                additionalProperties:
+                  type: object
+            $type:
+                type: string
+    Link:
+      type: object
+      properties:
+        SELF:
+          type: string
+          default: "self"
+        IDENTITEIT:
+          type: string
+          default: "identiteit"
+        KOPPELING:
+          type: string
+          default: "koppeling"
         id:
+          type: integer
+          format: int64
+        rel:
           type: string
-        symbol:
-          type: string
+        href:
+          type: URI
+    GeonLinkable:
+          allOf:
+            - $ref: '#/components/schemas/Linkable'
+          type: object
+          discriminator:
+            propertyName: $type
+            mapping:
+              rDoNotDisturbPrimer: '#/components/schemas/RDoNotDisturbPrimer'
+              rAttachment: '#/components/schemas/RAttachment'
+              rAttachmentEntry: '#/components/schemas/RAttachmentEntry'
+              rIdentityPrimer: '#/components/schemas/RIdentityPrimer'
+              rOrganisationPrimer: '#/components/schemas/ROrganisationPrimer'
+              rAbsenceReasonPrimer: '#/components/schemas/RAbsenceReasonPrimer'
+              rAbsenceSetting: '#/components/schemas/RAbsenceSetting'
+          properties:
+                lastModifiedAt:
+                    type: string
+                    format: date-time
+    RDoNotDisturbPrimer:
+          allOf:
+            - $ref: '#/components/schemas/GeonLinkable'
+          type: object
+          properties:
+            mondayStart:
+              type: string
+              format: date-time
+            mondayEnd:
+              type: string
+              format: date-time
+            tuesdayStart:
+              type: string
+              format: date-time
+            tuesdayEnd:
+              type: string
+              format: date-time
+            wednesdayStart:
+              type: string
+              format: date-time
+            wednesdayEnd:
+              type: string
+              format: date-time
+            thursdayStart:
+              type: string
+              format: date-time
+            thusdayEnd:
+              type: string
+              format: date-time
+            fridayStart:
+              type: string
+              format: date-time
+            fridayEnd:
+              type: string
+              format: date-time
+            saturdayStart:
+              type: string
+              format: date-time
+            saturdayEnd:
+              type: string
+              format: date-time
+            sundayStart:
+              type: string
+              format: date-time
+            sundayEnd:
+              type: string
+              format: date-time
+    RAttachment:
+          allOf:
+            - $ref: '#/components/schemas/GeonLinkable'
+          type: object
+          required:
+            - attachmentType
+          discriminator:
+            propertyName: attachmentType
+            mapping:
+              rAvatarAttachment: '#/components/schemas/RAvatarAttachment'
+          properties:
+            attachmentType:
+              $ref: '#/components/schemas/RAttachmentType'
+            entries:
+              type: array
+              items:
+                $ref: '#/components/schemas/RAttachmentEntry'
+    RAvatarAttachment:
+          allOf:
+            - $ref: '#/components/schemas/RAttachment'
+          type: object
+    RAttachmentType:
+      type: string
+      enum:
+        - IMAGE
+        - PDF
+        - DOCUMENT
+        - SPREADSHEET
+        - PRESENTATION
+        - VIDEO
+        - AUDIO
+        - YEARBOOK
+        - YEARBOOK_FRONT
+        - YEARBOOK_BACK
+        - YEARBOOK_IMAGE
+        - UNKNOWN
+      properties:
         name:
           type: string
-        current_price:
-          type: Double
+        policyFile:
+          type: string
+        mediaTypes:
+          type: array
+          items:
+            type: string
+    RAttachmentEntry:
+          allOf:
+            - $ref: '#/components/schemas/GeonLinkable'
+          type: object
+    RIdentityPrimer:
+          allOf:
+            - $ref: '#/components/schemas/GeonLinkable'
+          type: object
+          discriminator:
+            propertyName: $type
+            mapping:
+              rIdentityLinkedPrimer: '#/components/schemas/RIdentityLinkedPrimer'
+              rIdentity: '#/components/schemas/RIdentity'
+          required:
+            - firstname
+          properties:
+            firstname:
+              type: string
+            surname:
+              type: string
+            cachedAvatarUrl:
+              type: string
+    RIdentityLinkedPrimer:
+          allOf:
+            - $ref: '#/components/schemas/RIdentityPrimer'
+          type: object
+          discriminator:
+            propertyName: $type
+            mapping:
+              rGuardianPrimer: '#/components/schemas/RGuardianPrimer'
+              rChildPrimer: '#/components/schemas/RChildPrimer'
+              rTeacherPrimer: '#/components/schemas/RTeacherPrimer'
+    RGuardianPrimer:
+          allOf:
+            - $ref: '#/components/schemas/RIdentityLinkedPrimer'
+          type: object
+          properties:
+            accountActive:
+              type: boolean
+            numberOfExternalIdentitites:
+              type: integer
+            numberOfActiveExternalIdentities:
+              type: integer
+    RChildPrimer:
+          allOf:
+            - $ref: '#/components/schemas/RIdentityLinkedPrimer'
+          type: object
+          properties:
+            archived:
+              type: boolean
+            numberOfGuardians:
+              type: integer
+            enrolledSince:
+              type: string
+              format: date-time
+    RTeacherPrimer:
+          allOf:
+            - $ref: '#/components/schemas/RIdentityLinkedPrimer'
+          type: object
+          discriminator:
+            propertyName: $type
+            mapping:
+              rTeacher: '#/components/schemas/RTeacher'
+          required:
+            - active
+          properties:
+            active:
+              type: boolean
+            doNotDisturb:
+              $ref: '#/components/schemas/RDoNotDisturbPrimer'
+            pricingPlan:
+              $ref: '#/components/schemas/RPricingPlan'
+            accountActive:
+              type: boolean
+            numberOfExternalIdentitites:
+              type: integer
+            numberOfActiveExternalIdentities:
+              type: integer
+    RTeacher:
+          allOf:
+            - $ref: '#/components/schemas/RTeacherPrimer'
+          type: object
+          properties:
+            organisation:
+              $ref: '#/components/schemas/ROrganisationPrimer'
+    RIdentity:
+          allOf:
+            - $ref: '#/components/schemas/RIdentityPrimer'
+          type: object
+          required:
+            - email
+          properties:
+            avatar:
+              $ref: '#/components/schemas/RAvatarAttachment'
+            email:
+              type: string
+            guardians:
+              type: array
+              items:
+                $ref: '#/components/schemas/RGuardianPrimer'
+            children:
+              type: array
+              items:
+                $ref: '#/components/schemas/RChildPrimer'
+            teachers:
+              type: array
+              items:
+                $ref: '#/components/schemas/RTeacher'
+    RPricingPlan:
+        type: string
+        enum:
+          - PRE_PILOT
+          - PILOT
+          - STANDARD
+          - PLUS
+          - ENDED
+          - UNKNOWN
+        properties:
+          DEFAULT_PILOT_PRICE:
+            type: number
+          DEFAULT_STANDARD_PRICE:
+            type: number
+    ROrganisationPrimer:
+          allOf:
+            - $ref: '#/components/schemas/GeonLinkable'
+          type: object
+          required:
+            - code
+            - name
+            - active
+            - system
+            - pricingPlan
+            - pricingPlanStartDate
+          properties:
+            code:
+              type: string
+            name:
+              type: string
+            active:
+              type: boolean
+            system:
+              type: boolean
+            pricingPlan:
+              $ref: '#/components/schemas/RPricingPlan'
+            pricingPlanStartDate:
+              type: string
+              format: date
+            city:
+              type: string
+            pricingPlanEndDate:
+              type: string
+              format: date
+    RAbsenceDaypart:
+        type: string
+        enum:
+          - MORNING
+          - AFTERNOON
+          - CUSTOM
+    RAbsenceReasonPrimer:
+          allOf:
+            - $ref: '#/components/schemas/GeonLinkable'
+          type: object
+          discriminator:
+            propertyName: $type
+            mapping:
+              rAbsenceReason: '#/components/schemas/RAbsenceReason'
+              rRemoteAbsenceReason: '#/components/schemas/RRemoteAbsenceReason'
+          required:
+            - name
+            - organisation
+            - active
+          properties:
+            name:
+              type: string
+            organisation:
+              $ref: '#/components/schemas/ROrganisationPrimer'
+            active:
+              type: boolean
+    RAbsenceReasonType:
+        type: string
+        enum:
+          - SICKNESS
+          - OTHER
+    RAbsenceReason:
+          allOf:
+            - $ref: '#/components/schemas/RAbsenceReasonPrimer'
+          type: object
+          required:
+            - externalId
+            - externalName
+            - type
+            - endTimeRequired
+          properties:
+            externalId:
+              type: integer
+              format: int64
+            externalName:
+              type: string
+            type:
+              $ref: '#/components/schemas/RAbsenceReasonType'
+            endTimeRequired:
+              type: boolean
+    RAbsenceReport:
+          allOf:
+            - $ref: '#/components/schemas/Linkable'
+          type: object
+          required:
+            - child
+            - reason
+            - contactMe
+            - startDaypart
+            - startTime
+          properties:
+            child:
+              $ref: '#/components/schemas/RChildPrimer'
+            reason:
+              $ref: '#/components/schemas/RAbsenceReason'
+            contactMe:
+              type: boolean
+            startDaypart:
+              $ref: '#/components/schemas/RAbsenceDaypart'
+            startTime:
+              type: string
+              format: date-time
+            endDaypart:
+              $ref: '#/components/schemas/RAbsenceDaypart'
+            endTime:
+              type: string
+              format: date-time
+            comment:
+              type: string
+    RAbsenceSetting:
+          allOf:
+            - $ref: '#/components/schemas/GeonLinkable'
+          type: object
+          required:
+            - enabled
+          properties:
+            lastEditedBy:
+              type: string
+            enabled:
+              type: boolean
+            organisation:
+              $ref: '#/components/schemas/ROrganisationPrimer'
+    RAbsentChildPrimer:
+          allOf:
+            - $ref: '#/components/schemas/Linkable'
+          type: object
+          discriminator:
+            propertyName: $type
+            mapping:
+              rAbsentChild: '#/components/schemas/RAbsentChild'
+          required:
+            - name
+            - childId
+            - groupNames
+          properties:
+            name:
+              type: string
+            childId:
+              type: integer
+              format: int64
+            avatarUrl:
+              type: string
+            groupNames:
+              type: array
+              items:
+                type: string
+    RAbsentChild:
+          allOf:
+            - $ref: '#/components/schemas/RAbsentChildPrimer'
+          type: object
+          required:
+            - reportId
+            - startTime
+            - startDaypart
+          properties:
+            reportId:
+              type: integer
+              format: int64
+            startTime:
+              type: string
+              format: date-time
+            startDaypart:
+              $ref: '#/components/schemas/RAbsenceDaypart'
+            endTime:
+              type: string
+              format: date-time
+            endDaypart:
+              $ref: '#/components/schemas/RAbsenceDaypart'
+            $type:
+              type: string
+              default: 'absence.RAbsentChild'
+    RDailyAbsenceCount:
+          allOf:
+            - $ref: '#/components/schemas/Linkable'
+          type: object
+          properties:
+            numberOfDailyAbsences:
+              type: integer
+              format: int64
+            teacher:
+              $ref: '#/components/schemas/RTeacher'
+    RParnasSysAbsenceReason:
+          allOf:
+            - $ref: '#/components/schemas/Linkable'
+          type: object
+          properties:
+            name:
+              type: string
+            externalId:
+              type: integer
+              format: int64
+    RParnasSysAbsenceReport:
+          allOf:
+            - $ref: '#/components/schemas/Linkable'
+          type: object
+          required:
+            - child
+            - startDaypart
+            - startTime
+          properties:
+            child:
+              $ref: '#/components/schemas/RAbsentChildPrimer'
+            reason:
+              $ref: '#/components/schemas/RParnasSysAbsenceReason'
+            startDaypart:
+              $ref: '#/components/schemas/RAbsenceDaypart'
+            startTime:
+              type: string
+              format: date-time
+            endDaypart:
+              $ref: '#/components/schemas/RAbsenceDaypart'
+            endTime:
+              type: string
+              format: date-time
+            comment:
+              type: string
+    RRemoteAbsenceReason:
+            allOf:
+              - $ref: '#/components/schemas/RAbsenceReasonPrimer'
+            type: object
+            required:
+              - externalUrl
+            properties:
+              externalUrl:
+                type: string
