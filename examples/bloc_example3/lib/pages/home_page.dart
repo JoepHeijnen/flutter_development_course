@@ -1,4 +1,4 @@
-import 'package:bloc_example3/cubit/count/count2_cubit.dart';
+import 'package:bloc_example3/cubit/count/count_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,6 @@
-import 'package:bloc_example3/cubit/count/count2_cubit.dart';
-import 'package:bloc_example3/pages/home_page.dart';
+import 'package:bloc_example3/cubit/count/count_cubit.dart';
+import 'package:bloc_example3/cubit/count/count_list_cubit.dart';
+import 'package:bloc_example3/pages/count_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,39 +14,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CountCubit()..getCount(),
+      create: (_) => CountListCubit()..getList(),
       child: MaterialApp(
-        title: 'Welcome to Flutter',
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Welcome to Flutter'),
-          ),
-          body: const HomePage(),
-          floatingActionButton: Builder(builder: (_context) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 16),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      _context.read<CountCubit>().decrement();
-                    },
-                    tooltip: 'Decrement',
-                    child: const Icon(Icons.remove),
-                  ),
-                ),
-                FloatingActionButton(
-                  onPressed: () {
-                    _context.read<CountCubit>().increment();
-                  },
-                  tooltip: 'Increment',
-                  child: const Icon(Icons.add),
-                ),
-              ],
-            );
-          }),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
+        home: CountPage(),
       ),
     );
   }
